@@ -9,28 +9,24 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ifpb.edu.br.adapter.PessoasCustomAdapter;
-import ifpb.edu.br.asynctask.BuscarNomeAsyncTask;
 import ifpb.edu.br.callback.BuscarPessoaCallBack;
 import ifpb.edu.br.custompessoaadapter.R;
 import ifpb.edu.br.entidade.Pessoa;
 
 
 public class BuscarNomeActivity extends Activity
-        implements TextWatcher, OnItemClickListener, BuscarPessoaCallBack {
+        implements TextWatcher, BuscarPessoaCallBack {
 
     // Define o tamanho mínimo do texto para consulta no servidor.
     private static int TAMANHO_MINIMO_TEXTO = 1;
@@ -59,7 +55,7 @@ public class BuscarNomeActivity extends Activity
         nomesListView.setAdapter(adapter);
 
         // Evento de OnItemClickListener.
-        nomesListView.setOnItemClickListener(this);
+        //nomesListView.setOnItemClickListener(this);
     }
 
     // TextWatcher
@@ -71,29 +67,41 @@ public class BuscarNomeActivity extends Activity
 
     @Override
     public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+        // Consultar o servidor. Criar o JSONObject e uma AsyncTask<JSONObject, Void, Response>
 
         Log.i("EditTextListener", "onTextChanged: " + charSequence);
         String nome = charSequence.toString();
 
-        // Consultar o servidor. Criar o JSONObject e uma AsyncTask<JSONObject, Void, Response>
-        try {
+        if (nome.length() >= 1) {
 
-            if (nome.length() >= TAMANHO_MINIMO_TEXTO) {
-                // JSON
-                JSONObject json = new JSONObject();
-                json.put("fullName", nome);
+            //criação do objeto para demonstrar...
+            Pessoa user = new Pessoa();
+            user.getId();
+            user.getNome();
+            user.getEmail();
+            user.getDescricao();
 
-                BuscarNomeAsyncTask buscarNomeAsyncTask = new BuscarNomeAsyncTask(this);
-                buscarNomeAsyncTask.execute(json);
-            }else{
-                pessoas.clear();
-                arrayAdapter.notifyDataSetChanged();
-            }
+            //código que faz o trabalho ;-)
+            Gson gson = new Gson();
+            String userJSONString = gson.toJson(user);
 
-        } catch (JSONException e) {
+            //Para ver o resultado no Logcat
+            Log.d("Gson", "user JSON String: "+userJSONString);
 
-            Log.e("EditTextListener", e.getMessage());
+            /*JSONObject json = new JSONObject();
+            json.put("fullName", nome);
+
+            BuscarNomeAsyncTask buscarNomeAsyncTask = new BuscarNomeAsyncTask(this);
+            buscarNomeAsyncTask.execute(json);
+
+            pessoas.add(nome);
+            adapter.notifyDataSetChanged();*/
+
+        } else {
+            pessoas.clear();
+            arrayAdapter.notifyDataSetChanged();
         }
+
     }
 
     @Override
@@ -102,8 +110,14 @@ public class BuscarNomeActivity extends Activity
         Log.i("EditTextListener","afterTextChanged: " + editable);
     }
 
+    public Pessoa loadUserFromJSONGson(String jsonString) {
+        Gson gson = new Gson();
+        Pessoa user = gson.fromJson(jsonString, Pessoa.class);
+        return user;
+    }
+
     // OnItemClickListener
-    @Override
+   /*@Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
 
@@ -113,7 +127,7 @@ public class BuscarNomeActivity extends Activity
                 "Item " + (position + 1) + ": " + pessoas.get(position),
                 Toast.LENGTH_LONG);
         toast.show();
-    }
+    }*/
 
     // BuscarPessoaCallBack
     @Override

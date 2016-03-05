@@ -57,7 +57,7 @@ public class PessoasCustomAdapter extends BaseAdapter {
         holder.txtFullName.setText(pessoaItem.getNome());
         holder.txtInscription.setText(pessoaItem.getDescricao());
         holder.txtEmail.setText(pessoaItem.getEmail());
-        holder.txtIsDelivery.setText(pessoaItem.isDe()?"Entregue":"Não entregue");
+        holder.txtIsDelivery.setText(pessoaItem.isEntregue()? "Não entregue" : "Entregue");
 
         return convertView;
     }

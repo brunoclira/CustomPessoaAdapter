@@ -13,9 +13,8 @@ import java.io.Serializable;
 public class Pessoa implements Serializable {
 
 
-    public Pessoa (String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
+    public Pessoa () {
+
     }
 
     @SerializedName("id")
