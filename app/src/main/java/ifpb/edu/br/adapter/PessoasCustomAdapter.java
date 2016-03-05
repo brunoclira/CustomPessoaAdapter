@@ -42,8 +42,8 @@ public class PessoasCustomAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.txtInscription = (TextView) convertView.findViewById(R.id.inscription);
             holder.txtFullName = (TextView) convertView.findViewById(R.id.fullName);
-            holder.txtEmail = (TextView) convertView.findViewById(R.id.email);
-            holder.txtIsDelivery = (TextView) convertView.findViewById(R.id.isDelivery);
+           // holder.txtEmail = (TextView) convertView.findViewById(R.id.email);
+           // holder.txtIsDelivery = (TextView) convertView.findViewById(R.id.isDelivery);
 
             convertView.setTag(holder);
 
@@ -56,24 +56,27 @@ public class PessoasCustomAdapter extends BaseAdapter {
 
         holder.txtFullName.setText(pessoaItem.getNome());
         holder.txtInscription.setText(pessoaItem.getDescricao());
-        holder.txtEmail.setText(pessoaItem.getEmail());
-        holder.txtIsDelivery.setText(pessoaItem.isEntregue()? "Não entregue" : "Entregue");
+       // holder.txtEmail.setText(pessoaItem.getEmail());
+       // holder.txtIsDelivery.setText(pessoaItem.isEntregue()? "Não entregue" : "Entregue");
 
         return convertView;
     }
 
     @Override
     public int getCount() {
+
         return pessoas.size();
     }
 
     @Override
     public Object getItem(int position) {
+
         return pessoas.get(position);
     }
 
     @Override
     public long getItemId(int position) {
+
         return pessoas.indexOf(getItem(position));
     }
 
@@ -82,8 +85,8 @@ public class PessoasCustomAdapter extends BaseAdapter {
 
         TextView txtFullName;
         TextView txtInscription;
-        TextView txtEmail;
-        TextView txtIsDelivery;
+       // TextView txtEmail;
+       // TextView txtIsDelivery;
 
     }
 }

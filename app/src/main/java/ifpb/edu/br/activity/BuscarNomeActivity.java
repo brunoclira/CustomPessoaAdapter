@@ -16,14 +16,17 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import ifpb.edu.br.adapter.PessoasCustomAdapter;
+import ifpb.edu.br.asynctask.BuscarNomeAsyncTask;
 import ifpb.edu.br.callback.BuscarPessoaCallBack;
 import ifpb.edu.br.custompessoaadapter.R;
 import ifpb.edu.br.entidade.Pessoa;
-
 
 public class BuscarNomeActivity extends Activity
         implements TextWatcher, BuscarPessoaCallBack {
@@ -35,6 +38,7 @@ public class BuscarNomeActivity extends Activity
     ArrayAdapter<String> arrayAdapter;
     List<Pessoa> pessoas;
     PessoasCustomAdapter adapter;
+    ListView nomesListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,11 @@ public class BuscarNomeActivity extends Activity
         // Adapter modificado.
         nomesListView.setAdapter(adapter);
 
+        /*TESTE
+        nomesListView = (ListView) findViewById(R.id.nomesListView);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        nomesListView.setAdapter(arrayAdapter);*/
+
         // Evento de OnItemClickListener.
         //nomesListView.setOnItemClickListener(this);
     }
@@ -72,30 +81,39 @@ public class BuscarNomeActivity extends Activity
         Log.i("EditTextListener", "onTextChanged: " + charSequence);
         String nome = charSequence.toString();
 
-        if (nome.length() >= 1) {
+        if (nome.length() >= TAMANHO_MINIMO_TEXTO) {
 
             //criação do objeto para demonstrar...
             Pessoa user = new Pessoa();
-            user.getId();
+            //user.getId();
             user.getNome();
-            user.getEmail();
+            //user.getEmail();
             user.getDescricao();
 
-            //código que faz o trabalho ;-)
+            //código que faz o trabalho
             Gson gson = new Gson();
             String userJSONString = gson.toJson(user);
 
             //Para ver o resultado no Logcat
-            Log.d("Gson", "user JSON String: "+userJSONString);
+            Log.i("Gson", "user JSON String: " + userJSONString);
 
-            /*JSONObject json = new JSONObject();
-            json.put("fullName", nome);
+            JSONObject json = new JSONObject();
+            try {
+                json.put("fullName", nome);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            BuscarNomeAsyncTask buscarNomeAsyncTask = new BuscarNomeAsyncTask(this);
-            buscarNomeAsyncTask.execute(json);
+            //BuscarNomeAsyncTask buscarNomeAsyncTask = new BuscarNomeAsyncTask();
+            //buscarNomeAsyncTask.execute(json);
 
-            pessoas.add(nome);
-            adapter.notifyDataSetChanged();*/
+            BuscarNomeAsyncTask buscaAsyncTask = new BuscarNomeAsyncTask(this);
+            buscaAsyncTask.execute(json);
+
+           // this.pessoas.addAll(pessoas);
+           // adapter.notifyDataSetChanged();
+            pessoas.add(user);
+            adapter.notifyDataSetChanged();
 
         } else {
             pessoas.clear();

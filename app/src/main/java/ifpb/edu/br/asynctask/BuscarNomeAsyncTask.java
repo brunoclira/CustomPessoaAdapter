@@ -4,8 +4,10 @@ package ifpb.edu.br.asynctask;
  * Created by Bruno on 01/03/2016.
  */
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,10 +30,13 @@ import ifpb.edu.br.util.Response;
 public class BuscarNomeAsyncTask extends AsyncTask<JSONObject, Void, Response> {
 
     private BuscarPessoaCallBack buscarNomeCallBack;
+    Context context;
+    ListView list;
 
-    public BuscarNomeAsyncTask(BuscarPessoaCallBack buscarNomeCallBack) {
+   public BuscarNomeAsyncTask(BuscarPessoaCallBack buscarNomeCallBack) {
 
-        this.buscarNomeCallBack = buscarNomeCallBack;
+       this.buscarNomeCallBack = buscarNomeCallBack;
+
     }
 
     @Override
@@ -40,7 +45,7 @@ public class BuscarNomeAsyncTask extends AsyncTask<JSONObject, Void, Response> {
         Response response = null;
 
         JSONObject json = jsons[0];
-        Log.i("EditTextListener", "doInBackground (JSON): " + json);
+        //Log.i("EditTextListener", "doInBackground (JSON): " + json);
 
         try {
 
@@ -59,8 +64,7 @@ public class BuscarNomeAsyncTask extends AsyncTask<JSONObject, Void, Response> {
 
         int codeHttp = response.getStatusCodeHttp();
 
-        Log.i("EditTextListener", "Código HTTP: " + codeHttp
-                + " Conteúdo: " + response.getContentValue());
+        Log.i("EditTextListener", "Código HTTP: " + codeHttp + " Conteúdo: " + response.getContentValue());
 
         if (codeHttp != HttpURLConnection.HTTP_OK) {
 
@@ -69,8 +73,7 @@ public class BuscarNomeAsyncTask extends AsyncTask<JSONObject, Void, Response> {
         } else {
 
             Gson gson = new Gson();
-            List<Pessoa> pessoas = gson.fromJson(response.getContentValue(),
-                    new TypeToken<ArrayList<Pessoa>>(){}.getType());
+            List<Pessoa> pessoas = gson.fromJson(response.getContentValue(), new TypeToken<ArrayList<Pessoa>>(){}.getType());
 
             buscarNomeCallBack.backBuscarNome(pessoas);
 
