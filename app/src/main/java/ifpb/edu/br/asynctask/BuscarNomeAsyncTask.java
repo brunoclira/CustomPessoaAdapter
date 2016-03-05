@@ -3,6 +3,7 @@ package ifpb.edu.br.asynctask;
 /**
  * Created by Bruno on 01/03/2016.
  */
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -76,3 +77,4 @@ public class BuscarNomeAsyncTask extends AsyncTask<JSONObject, Void, Response> {
         }
     }
 }
+

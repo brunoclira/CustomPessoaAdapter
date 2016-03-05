@@ -11,7 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -28,13 +28,15 @@ import ifpb.edu.br.callback.BuscarPessoaCallBack;
 import ifpb.edu.br.custompessoaadapter.R;
 import ifpb.edu.br.entidade.Pessoa;
 
+
 public class BuscarNomeActivity extends Activity
         implements TextWatcher, OnItemClickListener, BuscarPessoaCallBack {
 
     // Define o tamanho mínimo do texto para consulta no servidor.
-    private static int TAMANHO_MINIMO_TEXTO = 4;
+    private static int TAMANHO_MINIMO_TEXTO = 1;
 
     private EditText nomeEditText;
+    ArrayAdapter<String> arrayAdapter;
     List<Pessoa> pessoas;
     PessoasCustomAdapter adapter;
 
@@ -83,6 +85,9 @@ public class BuscarNomeActivity extends Activity
 
                 BuscarNomeAsyncTask buscarNomeAsyncTask = new BuscarNomeAsyncTask(this);
                 buscarNomeAsyncTask.execute(json);
+            }else{
+                pessoas.clear();
+                arrayAdapter.notifyDataSetChanged();
             }
 
         } catch (JSONException e) {
@@ -117,6 +122,7 @@ public class BuscarNomeActivity extends Activity
         this.pessoas.clear();
         this.pessoas.addAll(pessoas);
         adapter.notifyDataSetChanged();
+
     }
 
     @Override
