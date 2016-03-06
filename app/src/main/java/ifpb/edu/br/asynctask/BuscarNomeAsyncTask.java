@@ -10,6 +10,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ import ifpb.edu.br.util.Response;
 /**
  * Created by Rhavy on 24/02/2016.
  */
-public class BuscarNomeAsyncTask extends AsyncTask<JSONObject, Void, Response> {
+public class BuscarNomeAsyncTask extends AsyncTask<Pessoa, Void, Response> {
 
     private BuscarPessoaCallBack buscarNomeCallBack;
 
@@ -36,13 +37,22 @@ public class BuscarNomeAsyncTask extends AsyncTask<JSONObject, Void, Response> {
     }
 
     @Override
-    protected Response doInBackground(JSONObject... jsons) {
+    protected Response doInBackground(Pessoa... jsons) {
 
         Response response = null;
 
-        JSONObject json = jsons[0];
+        //JSONObject json = jsons[0];
+        ////////////////////// Teste de Tratar na AsyncTask ////////////////////////
+        Gson gson = new Gson();
+        String pessoa = gson.toJson(jsons[0]);
+        JSONObject json = null;
+        try {
+            json = new JSONObject(pessoa);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         //Log.i("EditTextListener", "doInBackground (JSON): " + json);
-
+        /////////////////////////////////////Conseguuuui/////////////////////////////////////////
         try {
 
             response = HttpService.sendJSONPostResquest("get-byname", json);

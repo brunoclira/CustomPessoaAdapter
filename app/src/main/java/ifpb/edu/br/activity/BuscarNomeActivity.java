@@ -16,9 +16,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +27,7 @@ import ifpb.edu.br.entidade.Pessoa;
 
 public class BuscarNomeActivity extends Activity
         implements TextWatcher, BuscarPessoaCallBack {
-
+    //FINALIZADO
     // Define o tamanho mínimo do texto para consulta no servidor.
     private static int TAMANHO_MINIMO_TEXTO = 1;
 
@@ -38,7 +35,10 @@ public class BuscarNomeActivity extends Activity
     ArrayAdapter<String> arrayAdapter;
     List<Pessoa> pessoas;
     PessoasCustomAdapter adapter;
-    ListView nomesListView;
+    //ListView nomesListView;
+
+    //Lembrar de mudar o posicionamento e as cores da activity... OBS: Mexer no String depois e procurar splash q muda de cor
+    //Refatorar e Organizar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,15 +77,15 @@ public class BuscarNomeActivity extends Activity
     @Override
     public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
         // Consultar o servidor. Criar o JSONObject e uma AsyncTask<JSONObject, Void, Response>
-        Log.i("EditTextListener", "onTextChanged: " + charSequence);
-        ////////////////////// MEU GSON ////////////////////////
+        //Log.i("EditTextListener", "onTextChanged: " + charSequence);
+
+        ////////////////////// Teste de Tratar dentro da MainActivity ////////////////////////
         /*if (nome.length() >= TAMANHO_MINIMO_TEXTO) {
             String nome = charSequence.toString();
-            //criação do objeto para demonstrar...
+            //criação do objeto
             Pessoa user = new Pessoa();
-            //user.getId();
             user.getNome();
-            //user.getEmail();
+            user.getEmail();
             user.getDescricao();
 
             //código que faz o trabalho
@@ -95,12 +95,25 @@ public class BuscarNomeActivity extends Activity
             //Para ver o resultado no Logcat
             Log.i("Gson", "user JSON String: " + userJSONString);*/
 
-        //////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////Falhou/////////////////////////////////////////
+
+
+        if(charSequence.length() >= TAMANHO_MINIMO_TEXTO){
+
+            Pessoa pessoa = new Pessoa();
+            pessoa.setNome(charSequence.toString());
+
+            BuscarNomeAsyncTask buscaAsyncTask = new BuscarNomeAsyncTask(this);
+            buscaAsyncTask.execute(pessoa);
+        }else{
+            pessoas.clear();
+            arrayAdapter.notifyDataSetChanged();
+        }
 
         ///////////////////////// MEGA TESTE FINAL ///////////////////////////////////
-        Log.i("onTextChanged", charSequence.toString());
+        //Log.i("onTextChanged", charSequence.toString());
 
-        JSONObject json = new JSONObject();
+        /*JSONObject json = new JSONObject();
 
         if (charSequence.length() >= TAMANHO_MINIMO_TEXTO) {
             try {
@@ -114,7 +127,7 @@ public class BuscarNomeActivity extends Activity
         } else {
             pessoas.clear();
             arrayAdapter.notifyDataSetChanged();
-        }
+        }*/
 
         ////////////////////////////////////////////////////////////////
         //pessoas.add(user);
