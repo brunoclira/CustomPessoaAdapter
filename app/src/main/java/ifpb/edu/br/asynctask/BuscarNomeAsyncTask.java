@@ -41,7 +41,6 @@ public class BuscarNomeAsyncTask extends AsyncTask<Pessoa, Void, Response> {
 
         Response response = null;
 
-        //JSONObject json = jsons[0];
         ////////////////////// Teste de Tratar na AsyncTask ////////////////////////
         Gson gson = new Gson();
         String pessoa = gson.toJson(jsons[0]);
@@ -52,7 +51,7 @@ public class BuscarNomeAsyncTask extends AsyncTask<Pessoa, Void, Response> {
             e.printStackTrace();
         }
         //Log.i("EditTextListener", "doInBackground (JSON): " + json);
-        /////////////////////////////////////Conseguuuui/////////////////////////////////////////
+        /////////////////////////////////////Trecho de certo - Conseguuuui/////////////////////////////////////////
         try {
 
             response = HttpService.sendJSONPostResquest("get-byname", json);

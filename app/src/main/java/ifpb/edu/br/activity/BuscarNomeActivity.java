@@ -90,8 +90,8 @@ public class BuscarNomeActivity extends Activity
 
             //código que faz o trabalho
             Gson gson = new Gson();
-            String userJSONString = gson.toJson(user);
-            gson.toString();
+            String userJSONString = gson.toJson(user);//Convertendo para objeto
+            gson.toString();//Convertendo para string
             //Para ver o resultado no Logcat
             Log.i("Gson", "user JSON String: " + userJSONString);*/
 
@@ -110,35 +110,10 @@ public class BuscarNomeActivity extends Activity
             arrayAdapter.notifyDataSetChanged();
         }
 
-        ///////////////////////// MEGA TESTE FINAL ///////////////////////////////////
-        //Log.i("onTextChanged", charSequence.toString());
-
-        /*JSONObject json = new JSONObject();
-
-        if (charSequence.length() >= TAMANHO_MINIMO_TEXTO) {
-            try {
-                json.put("fullName", charSequence.toString());
-            } catch (JSONException e) {
-                Log.e("Main Activity", e.getMessage());
-            }
-
-            BuscarNomeAsyncTask buscaAsyncTask = new BuscarNomeAsyncTask(this);
-            buscaAsyncTask.execute(json);
-        } else {
-            pessoas.clear();
-            arrayAdapter.notifyDataSetChanged();
-        }*/
-
-        ////////////////////////////////////////////////////////////////
         //pessoas.add(user);
         //adapter.notifyDataSetChanged();
 
-    } /*else {
-            pessoas.clear();
-            arrayAdapter.notifyDataSetChanged();
-        }*/
-
-    //}
+    }
 
     @Override
     public void afterTextChanged(Editable editable) {
