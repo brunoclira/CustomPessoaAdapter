@@ -119,6 +119,8 @@ public class BuscarNomeActivity extends Activity
     public void afterTextChanged(Editable editable) {
 
         Log.i("EditTextListener","afterTextChanged: " + editable);
+        
+
     }
 
     public Pessoa loadUserFromJSONGson(String jsonString) {
