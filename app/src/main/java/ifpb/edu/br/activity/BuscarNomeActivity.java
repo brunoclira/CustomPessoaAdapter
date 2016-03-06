@@ -77,12 +77,10 @@ public class BuscarNomeActivity extends Activity
     @Override
     public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
         // Consultar o servidor. Criar o JSONObject e uma AsyncTask<JSONObject, Void, Response>
-
         Log.i("EditTextListener", "onTextChanged: " + charSequence);
-        String nome = charSequence.toString();
-
-        if (nome.length() >= TAMANHO_MINIMO_TEXTO) {
-
+        ////////////////////// MEU GSON ////////////////////////
+        /*if (nome.length() >= TAMANHO_MINIMO_TEXTO) {
+            String nome = charSequence.toString();
             //criação do objeto para demonstrar...
             Pessoa user = new Pessoa();
             //user.getId();
@@ -93,34 +91,41 @@ public class BuscarNomeActivity extends Activity
             //código que faz o trabalho
             Gson gson = new Gson();
             String userJSONString = gson.toJson(user);
-
+            gson.toString();
             //Para ver o resultado no Logcat
-            Log.i("Gson", "user JSON String: " + userJSONString);
+            Log.i("Gson", "user JSON String: " + userJSONString);*/
 
-            JSONObject json = new JSONObject();
+        //////////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////// MEGA TESTE FINAL ///////////////////////////////////
+        Log.i("onTextChanged", charSequence.toString());
+
+        JSONObject json = new JSONObject();
+
+        if (charSequence.length() >= TAMANHO_MINIMO_TEXTO) {
             try {
-                json.put("fullName", nome);
+                json.put("fullName", charSequence.toString());
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e("Main Activity", e.getMessage());
             }
-
-            //BuscarNomeAsyncTask buscarNomeAsyncTask = new BuscarNomeAsyncTask();
-            //buscarNomeAsyncTask.execute(json);
 
             BuscarNomeAsyncTask buscaAsyncTask = new BuscarNomeAsyncTask(this);
             buscaAsyncTask.execute(json);
-
-           // this.pessoas.addAll(pessoas);
-           // adapter.notifyDataSetChanged();
-            pessoas.add(user);
-            adapter.notifyDataSetChanged();
-
         } else {
             pessoas.clear();
             arrayAdapter.notifyDataSetChanged();
         }
 
-    }
+        ////////////////////////////////////////////////////////////////
+        //pessoas.add(user);
+        //adapter.notifyDataSetChanged();
+
+    } /*else {
+            pessoas.clear();
+            arrayAdapter.notifyDataSetChanged();
+        }*/
+
+    //}
 
     @Override
     public void afterTextChanged(Editable editable) {
@@ -133,19 +138,6 @@ public class BuscarNomeActivity extends Activity
         Pessoa user = gson.fromJson(jsonString, Pessoa.class);
         return user;
     }
-
-    // OnItemClickListener
-   /*@Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-
-        Log.i("EditTextListener", "Position: " + position);
-
-        Toast toast = Toast.makeText(this,
-                "Item " + (position + 1) + ": " + pessoas.get(position),
-                Toast.LENGTH_LONG);
-        toast.show();
-    }*/
 
     // BuscarPessoaCallBack
     @Override

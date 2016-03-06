@@ -29,6 +29,14 @@ public class Pessoa implements Serializable {
     @SerializedName("typeInscription")
     private String descricao;
 
+    @SerializedName("isDelivered")
+    private boolean entregue;
+
+    public String getDescricao() {
+
+        return descricao;
+    }
+
     public int getId() {
 
         return id;
@@ -47,14 +55,6 @@ public class Pessoa implements Serializable {
     public void setEntregue(boolean entregue) {
 
         this.entregue = entregue;
-    }
-
-    @SerializedName("isDelivered")
-    private boolean entregue;
-
-    public String getDescricao() {
-
-        return descricao;
     }
 
     public void setDescricao(String descricao) {
